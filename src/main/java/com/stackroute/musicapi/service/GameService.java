@@ -9,8 +9,12 @@ import java.util.List;
 public interface GameService {
 
     public List<Player> getListOfTrack();
+
     public Player getUserById(int id);
+
     public List<Player> getPlayerByName(String name) throws PlayerNotFoundException;
+
     public Player saveUser(Player player) throws PlayerAlreadyExistException;
+
     public Player deleteUser(int userId);
 }

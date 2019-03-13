@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class GameServicesImpl implements GameService{
+public class GameServicesImpl implements GameService {
 
     private GameRepository gameRepository;
 
     //Constructor
 
-   @Autowired
+    @Autowired
     public void setUserRepository(GameRepository gameRepository) {
         this.gameRepository = gameRepository;
     }
@@ -26,29 +26,29 @@ public class GameServicesImpl implements GameService{
     public GameServicesImpl(GameRepository gameRepository) {
         this.gameRepository = gameRepository;
     }
+
     public GameServicesImpl() {
 
     }
 
 
-   //  Get the List of user
+    //  Get the List of user
 
-    public List<Player> getListOfTrack(){
+    public List<Player> getListOfTrack() {
 
-       List<Player> playerList = (List<Player>) gameRepository.findAll();
+        List<Player> playerList = (List<Player>) gameRepository.findAll();
         return playerList;
 
-   }
+    }
 
     // Get player  by name
 
     public List<Player> getPlayerByName(String name) throws PlayerNotFoundException {
 
-       List<Player> playerList =  gameRepository.searchByName(name);
-        if(playerList.isEmpty()){
+        List<Player> playerList = gameRepository.searchByName(name);
+        if (playerList.isEmpty()) {
             throw new PlayerNotFoundException("Player not Found");
-        }
-        else{
+        } else {
             return playerList;
         }
     }
@@ -56,13 +56,12 @@ public class GameServicesImpl implements GameService{
 
     // Get user by id
 
-    public Player getUserById(int id){
+    public Player getUserById(int id) {
 
         Optional<Player> getUserById = gameRepository.findById(id);
-        if(getUserById != null){
+        if (getUserById != null) {
             return getUserById.get();
-        }
-        else{
+        } else {
             return null;
         }
     }
@@ -71,41 +70,38 @@ public class GameServicesImpl implements GameService{
 
     public Player saveUser(Player player) throws PlayerAlreadyExistException {
 
-        if(gameRepository.existsById(player.getPlayerId())){
+        if (gameRepository.existsById(player.getPlayerId())) {
             throw new PlayerAlreadyExistException("User already Exist");
         }
+
         Player savePlayer = gameRepository.save(player);
 
-        if(savePlayer == null){
+        if (savePlayer == null) {
             throw new PlayerAlreadyExistException("User Already Exists");
         }
-        return  savePlayer;
+        return savePlayer;
     }
 
 
+    public Player updateUser(Player user, int userId) {
 
+        Boolean isUserWithIDExists = gameRepository.existsById(userId);
 
-//    public Player updateUser(Player user, int userId){
-//
-//        Boolean isUserWithIDExists = gameRepository.existsById(userId);
-//
-//        if(isUserWithIDExists){
-//            Player updateUser = (Player) gameRepository.findById(userId).get();
-//         updateUser.setPlayerName(user.getPlayerName());
-//         updateUser.setScore(user.getScore());
-//            return  gameRepository.save(updateUser);
-//        }
-//        else{
-//            return null;
-//        }
-//
-//
-//    }
+        if (isUserWithIDExists) {
+            Player updateUser = (Player) gameRepository.findById(userId).get();
+            updateUser.setPlayerName(user.getPlayerName());
+            updateUser.setScore(user.getScore());
+            return gameRepository.save(updateUser);
+        } else {
+            return null;
+        }
+
+    }
 
 
     // Update user info
 
-    public Player deleteUser(int userId){
+    public Player deleteUser(int userId) {
         Player deletedUser = (Player) gameRepository.findById(userId).get();
         gameRepository.deleteById(userId);
         return deletedUser;

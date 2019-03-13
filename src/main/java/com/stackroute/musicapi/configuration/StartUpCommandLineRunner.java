@@ -37,15 +37,11 @@ public class StartUpCommandLineRunner implements CommandLineRunner {
    private GameServicesImpl gameServices;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) throws PlayerAlreadyExistException {
+//            gameServices.saveUser(new Player(id4,player4,score4));
+//            gameServices.saveUser(new Player(id5,player5,score5));
 
-        try {
-            gameServices.saveUser(new Player(id4,player4,score4));
-            gameServices.saveUser(new Player(id5,player5,score5));
-        }
-        catch (PlayerAlreadyExistException e) {
-            e.printStackTrace();
-        }
+
     }
 
 }

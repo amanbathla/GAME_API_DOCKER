@@ -1,6 +1,5 @@
 package com.stackroute.musicapi.exception;
 
-import org.springframework.hateoas.VndErrors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,9 +11,16 @@ import java.util.Optional;
 @ControllerAdvice
 public class PlayerControllerAdvice {
 
-    @ExceptionHandler(value = Exception.class)
-    public ResponseEntity<String> exceptionhandler(Exception e)
-    {
-        return new ResponseEntity<>("erorr exception Occured Global " +e.getMessage(), HttpStatus.CONFLICT);
+
+    @ExceptionHandler(value = PlayerNotFoundException.class)
+    public ResponseEntity<String> PlayerNotFoundException(PlayerNotFoundException e) {
+        return new ResponseEntity<>("Player Not Found Exception " + e.getMessage(), HttpStatus.CONFLICT);
     }
+
+    @ExceptionHandler(value = PlayerAlreadyExistException.class)
+    public ResponseEntity<String> playerAlreadyExistException(PlayerAlreadyExistException e) {
+        return new ResponseEntity<>("Player Already Exists Exception " + e.getMessage(), HttpStatus.CONFLICT);
+    }
+
+
 }

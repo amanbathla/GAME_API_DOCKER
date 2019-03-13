@@ -43,17 +43,15 @@ public class StartUpApplicationListner implements ApplicationListener<ContextRef
 
     @Autowired
     private GameServicesImpl gameServices;
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
+//
+//            gameServices.saveUser(new Player(id1,env.getProperty("playerName1"),score1));
+//            gameServices.saveUser(new Player(id2,env.getProperty("playerName2"),score2));
+//            gameServices.saveUser(new Player(id3,env.getProperty("playerName3"),score3));
 
-        try {
-            gameServices.saveUser(new Player(id1,env.getProperty("playerName1"),score1));
-            gameServices.saveUser(new Player(id2,env.getProperty("playerName2"),score2));
-            gameServices.saveUser(new Player(id3,env.getProperty("playerName3"),score3));
-        }
-        catch (PlayerAlreadyExistException e) {
-            e.printStackTrace();
-        }
+
     }
 }

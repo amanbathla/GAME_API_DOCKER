@@ -33,7 +33,7 @@ public class GameController {
     // Get  Request for getting all the user
 
     @GetMapping("/games")
-    public ResponseEntity<List<Player>> getAllUser(){
+    public ResponseEntity<List<Player>> getAllUser() {
 
         List<Player> userList = gameServices.getListOfTrack();
         return new ResponseEntity<List<Player>>(userList, HttpStatus.OK);
@@ -56,9 +56,9 @@ public class GameController {
     public ResponseEntity<List<Player>> getByName(@PathVariable("name") String playerName) throws PlayerNotFoundException {
         ResponseEntity responseEntity;
 
-            List<Player> player =  gameServices.getPlayerByName(playerName);
-            responseEntity =  new ResponseEntity<List<Player>>(player,HttpStatus.OK);
-            return responseEntity;
+        List<Player> player = gameServices.getPlayerByName(playerName);
+        responseEntity = new ResponseEntity<List<Player>>(player, HttpStatus.OK);
+        return responseEntity;
 
     }
 
@@ -66,31 +66,24 @@ public class GameController {
     // Post the request
 
     @PostMapping("/game")
-    public ResponseEntity<Player> savedUser(@RequestBody @Valid Player player){
+    public ResponseEntity<Player> savedUser(@RequestBody @Valid Player player) throws PlayerAlreadyExistException {
 
         ResponseEntity responseEntity;
-        try{
-            Player savedUser  = gameServices.saveUser(player);
-            responseEntity = new ResponseEntity<Player>(savedUser, HttpStatus.OK);
-            return responseEntity;
-        }
-        catch (PlayerAlreadyExistException ex){
 
-            responseEntity =  new ResponseEntity<String>(ex.getMessage(), HttpStatus.CONFLICT);
-            return  responseEntity;
-        }
+        Player savedUser = gameServices.saveUser(player);
+        responseEntity = new ResponseEntity<Player>(savedUser, HttpStatus.OK);
+        return responseEntity;
+
 
     }
-
 
 
     @DeleteMapping("/game/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable("id") int userId){
+    public ResponseEntity<String> deleteUser(@PathVariable("id") int userId) {
 
-        Player deleteUser =  gameServices.deleteUser(userId);
+        Player deleteUser = gameServices.deleteUser(userId);
         return new ResponseEntity<String>("User Deleted Successfully", HttpStatus.OK);
     }
-
 
 
 }
